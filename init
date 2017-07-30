@@ -19,12 +19,12 @@ function removeBrokenLinks {
 function symlinkFiles {
 	FROM="$1"
 	TO=$2
-	if [ ! -d $TO ]; then 
+	if [ ! -d $TO ]; then
 		mkdir -p $TO
 	fi
-	
+
 	removeBrokenLinks $TO
-	
+
 	for f in $FROM
 	do
 		FILENAME=$(basename $f)
@@ -50,8 +50,9 @@ function symlinkFiles {
 function lessCompile {
 	SOURCE=$1
 	TARGET=$2
+	OPTIONS=$3
 
-	$DIR/node_modules/.bin/lessc --clean-css $SOURCE $TARGET
+	$DIR/node_modules/.bin/lessc $OPTIONS $SOURCE $TARGET
 }
 
 npm install
@@ -66,5 +67,6 @@ symlinkFiles "$DIR/node_modules/jquery/dist/jquery.min.js" "$DIR/js/vendor/jquer
 symlinkFiles "$DIR/node_modules/jquery/dist/jquery.min.map" "$DIR/js/vendor/jquery"
 
 lessCompile less/test.less css/test.css
-lessCompile less/vendor/bootstrap/bootstrap.less css/bootstrap.css
-lessCompile less/vendor/font-awesome/font-awesome.less css/font-awesome.css
+lessCompile less/admin.less css/admin.css
+lessCompile less/vendor/bootstrap/bootstrap.less css/bootstrap.css --clean-css
+lessCompile less/vendor/font-awesome/font-awesome.less css/font-awesome.css --clean-css
