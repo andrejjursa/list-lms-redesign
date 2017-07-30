@@ -1,0 +1,15 @@
+.list-navbar-a(@color, @background, @chp: 25%, @bhp: 25%) {
+
+  color: @color;
+  background-color: @background;
+
+  &:hover, &:focus {
+    color: darken(@color, @chp);
+    background-color: lighten(@background, @bhp);
+  }
+
+  &:focus {
+    outline: 1px dotted darken(@color, @chp);
+  }
+
+}

@@ -1,0 +1,80 @@
+/*!
+ * LIST Admin stylesheet
+ */
+
+@import "vendor/bootstrap/mixins.less";
+@import "vendor/bootstrap/variables.less";
+@import "variables.less";
+@import "mixins.less";
+
+nav.navbar-list {
+  background-color: @list-navbar-background-color;
+  border-color: @list-navbar-border-color;
+
+  a {
+    .list-animation-transition(~"color 0.3s ease-in-out, background-color 0.3s ease-in-out");
+
+    &:focus {
+      .list-animation-transition(~"color 0s, background-color 0s");
+    }
+  }
+
+  .navbar-collapse {
+    border-color: @list-navbar-border-color;
+  }
+
+  button.navbar-toggle {
+    border-color: @list-navbar-border-color;
+
+    .icon-bar {
+      background-color: @list-navbar-border-color;
+    }
+
+    &:hover, &:focus {
+      background-color: darken(@list-navbar-border-color, 10%);
+    }
+  }
+
+  a.navbar-brand {
+    .list-navbar-a(@list-navbar-link-color, @list-navbar-background-color, 25%, 0%);
+  }
+
+  .navbar-nav {
+    a {
+      .list-navbar-a(@list-navbar-link-color, @list-navbar-background-color);
+    }
+
+    .active {
+      & > a {
+        .list-navbar-a(@list-navbar-link-color-active, @list-navbar-background-color-active, 5%, 10%);
+      }
+    }
+
+    .dropdown {
+      & > a {
+        .list-navbar-a(@list-navbar-link-color, @list-navbar-background-color);
+      }
+
+      &.active > a {
+        .list-navbar-a(@list-navbar-link-color-active, @list-navbar-background-color-active, 10%, 15%);
+      }
+
+      &.open > a {
+        .list-navbar-a(@list-navbar-link-color-active, @list-navbar-background-color-active, 5%, 10%);
+      }
+
+      &.open.active > a {
+        .list-navbar-a(@list-navbar-link-color-active, @list-navbar-background-color-active, 15%, 20%);
+      }
+    }
+
+    ul.dropdown-menu {
+      background-color: @list-navbar-background-color;
+      border-color: @list-navbar-border-color;
+
+      li.divider {
+        background-color: @list-navbar-border-color;
+      }
+    }
+  }
+}
