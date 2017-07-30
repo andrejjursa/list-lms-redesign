@@ -62,11 +62,8 @@ symlinkFiles "$DIR/node_modules/bootstrap/dist/js/*.js" "$DIR/js/vendor/bootstra
 symlinkFiles "$DIR/node_modules/bootstrap/dist/fonts/*" "$DIR/fonts"
 symlinkFiles "$DIR/node_modules/font-awesome/fonts/*" "$DIR/fonts"
 symlinkFiles "$DIR/node_modules/font-awesome/less/*.less" "$DIR/less/vendor/font-awesome"
-
-
-
-#node_modules/.bin/lessc --clean-css less/test.less css/test.css
-#node_modules/.bin/lessc less/test.less css/test.css
+symlinkFiles "$DIR/node_modules/jquery/dist/jquery.min.js" "$DIR/js/vendor/jquery"
+symlinkFiles "$DIR/node_modules/jquery/dist/jquery.min.map" "$DIR/js/vendor/jquery"
 
 lessCompile less/test.less css/test.css
 lessCompile less/vendor/bootstrap/bootstrap.less css/bootstrap.css
