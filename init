@@ -1,0 +1,73 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+function removeBrokenLinks {
+	FILES="$1/*"
+
+	for f in $FILES
+	do
+		if [ -L $f ]; then
+			LINKEDFILE=$(readlink $f)
+			if [ ! -e $LINKEDFILE ]; then
+				rm -f $f
+			fi
+		fi
+	done
+}
+
+function symlinkFiles {
+	FROM="$1"
+	TO=$2
+	if [ ! -d $TO ]; then 
+		mkdir -p $TO
+	fi
+	
+	removeBrokenLinks $TO
+	
+	for f in $FROM
+	do
+		FILENAME=$(basename $f)
+		if [ ! -f $TO/$FILENAME ]; then
+			ln -s $f $TO/$FILENAME
+			if [ $? -ne 0 ]; then
+				echo "Failed to make symbolic link to file $f ..."
+				exit 1
+			fi
+		else
+			if [ ! -L $TO/$FILENAME ]; then
+				rm -f $TO/$FILENAME
+				ln -s $f $TO/$FILENAME
+				if [ $? -ne 0 ]; then
+					echo "Failed to make symbolic link to file $f ..."
+					exit 1
+				fi
+			fi
+		fi
+	done
+}
+
+function lessCompile {
+	SOURCE=$1
+	TARGET=$2
+
+	$DIR/node_modules/.bin/lessc --clean-css $SOURCE $TARGET
+}
+
+npm install
+
+symlinkFiles "$DIR/node_modules/bootstrap/less/*.less" "$DIR/less/vendor/bootstrap"
+symlinkFiles "$DIR/node_modules/bootstrap/less/mixins/*.less" "$DIR/less/vendor/bootstrap/mixins"
+symlinkFiles "$DIR/node_modules/bootstrap/dist/js/*.js" "$DIR/js/vendor/bootstrap"
+symlinkFiles "$DIR/node_modules/bootstrap/dist/fonts/*" "$DIR/fonts"
+symlinkFiles "$DIR/node_modules/font-awesome/fonts/*" "$DIR/fonts"
+symlinkFiles "$DIR/node_modules/font-awesome/less/*.less" "$DIR/less/vendor/font-awesome"
+
+
+
+#node_modules/.bin/lessc --clean-css less/test.less css/test.css
+#node_modules/.bin/lessc less/test.less css/test.css
+
+lessCompile less/test.less css/test.css
+lessCompile less/vendor/bootstrap/bootstrap.less css/bootstrap.css
+lessCompile less/vendor/font-awesome/font-awesome.less css/font-awesome.css

@@ -1,0 +1,53 @@
+/*!
+ * TEST 1.0.0
+ */
+
+@list-a-color: green;
+
+@color: red;
+
+.my-transition(@setup) {
+  transition: @setup;
+  -webkit-transition: @setup;
+}
+
+.clearfix {
+	display: block;
+    zoom: 1;
+
+	&:after {
+		content: " ";
+		display: block;
+		font-size: 0;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+}
+
+body {
+	color: @color;
+
+	div.header {
+		padding: 50px 0;
+
+		.my-transition(padding 1.0s ease-in-out);
+
+		h1 {
+			font-size: 4em;
+			color: lighten(@color, 40%);
+		}
+
+		&.nopading {
+			padding: 0;
+		}
+	}
+
+	a {
+		color: @list-a-color;
+
+		&:hover {
+			color: darken(@list-a-color, 10%);
+		}
+	}
+}
